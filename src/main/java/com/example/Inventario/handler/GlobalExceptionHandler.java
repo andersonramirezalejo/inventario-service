@@ -14,6 +14,12 @@ import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+/**
+ * GlobalExceptionHandler gestiona de forma centralizada las excepciones lanzadas en la aplicación.
+ * <p>
+ * Proporciona respuestas personalizadas para diferentes tipos de excepciones, devolviendo información
+ * estructurada y códigos de estado HTTP apropiados.
+ */
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 

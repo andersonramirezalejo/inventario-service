@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * FeignClientConfig configura beans personalizados para los clientes Feign.
+ */
 @Configuration
 public class FeignClientConfig {
 
@@ -14,6 +17,12 @@ public class FeignClientConfig {
 
     private static final String API_KEY_AUTH_HEADER = "X-API-KEY";
 
+
+    /**
+     * Crea un interceptor de solicitudes para Feign que añade la API Key en el encabezado de cada solicitud.
+     *
+     * @return un interceptor de solicitudes para Feign.
+     */
     @Bean
     public RequestInterceptor requestInterceptor() {
         return new RequestInterceptor() {
