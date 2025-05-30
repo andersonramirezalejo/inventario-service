@@ -19,8 +19,10 @@ Este proyecto es un microservicio desarrollado en Spring Boot para la gestión d
 - [Docker](#docker)
 - [Swagger / OpenAPI](#swagger--openapi)
 - [Estructura del Proyecto](#estructura-del-proyecto)
+- [Configuración Importante](#configuración-importante-applicationproperties)
 - [Uso de Herramientas de IA en el Desarrollo](#uso-de-herramientas-de-ia-en-el-desarrollo)
 - [Autor](#autor)
+
 
 ## Descripción General
 
@@ -39,6 +41,10 @@ El microservicio sigue una arquitectura basada en capas y se integra con otros s
 - **Handler:** Manejo centralizado de excepciones.
 
 ## Diagrama de Interacción entre Servicios
+
+<p align="center">
+  <img src="PlantUML_Inventario.png" alt="Diagrama de Interacción entre Servicios" width="700"/>
+</p>
 
 ```plantuml
 @startuml
@@ -116,7 +122,7 @@ El microservicio protege sus endpoints mediante autenticación por API Key. Debe
 ```http
 GET /api/inventario HTTP/1.1
 Host: localhost:8081
-X-API-KEY: inventario_secreta_54321
+X-API-KEY: tu_api_key
 ```
 
 - Los endpoints de Swagger y documentación están abiertos para facilitar la exploración de la API.
@@ -205,6 +211,28 @@ Inventario/
 │           └── service/
 └── target/
 ```
+
+## Configuración Importante (`application.properties`)
+
+Asegúrate de definir correctamente las siguientes propiedades en `src/main/resources/application.properties` para el funcionamiento del microservicio:
+
+```properties
+# Configuración de la base de datos
+spring.datasource.url=jdbc:postgresql://localhost:5432/db_inventario
+spring.datasource.username=usuario
+spring.datasource.password=contraseña
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+
+# Configuración de la API Key para seguridad
+inventario-service.api-key=tu_api_key
+
+# Configuración del microservicio de productos (Feign)
+productos-service.url=http://productos-service:8080
+producto-service.api.key=api_key_para_productos
+```
+
+Ajusta los valores según tu entorno y necesidades. Estas propiedades permiten la conexión a la base de datos, la autenticación por API Key y la integración con el microservicio de productos.
 
 ## Uso de Herramientas de IA en el Desarrollo
 
