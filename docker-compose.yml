@@ -1,0 +1,36 @@
+services:
+  # Base de datos PostgreSQL para el servicio de Inventario
+  db_inventario:
+    image: postgres:13
+    container_name: db_inventario_container
+    environment:
+      POSTGRES_DB: inventariodb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: user
+    ports:
+      - "5433:5432"
+    volumes:
+      - inventario_data:/var/lib/postgresql/data
+
+  # Microservicio de Inventario
+  inventario-service:
+    build:
+      context: ./inventario-service
+      dockerfile: Dockerfile
+    container_name: inventario_service_container
+    ports:
+      - "8081:8081"
+    depends_on:
+      - db_inventario
+      - productos-service
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db_inventario:5432/inventariodb
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: user
+      PRODUCTO_SERVICE_URL: http://productos-service:8080
+      PRODUCTO_SERVICE_API_KEY: productos_secreta_12345
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+    restart: unless-stopped
+
+volumes:
+  inventario_data: # Define el volumen para persistir datos de inventario
