@@ -12,6 +12,13 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+/**
+ * SecurityConfig configura la seguridad de la aplicación usando Spring Security.
+ * <p>
+ * Protege los endpoints del servicio de inventario mediante autenticación por API Key,
+ * deshabilita CSRF, establece la política de sesiones como stateless y permite el acceso
+ * público a la documentación Swagger.
+ */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -21,6 +28,14 @@ public class SecurityConfig {
 
     private static final String API_KEY_AUTH_HEADER = "X-API-KEY";
 
+
+    /**
+     * Configura la cadena de filtros de seguridad para la aplicación.
+     *
+     * @param http objeto HttpSecurity para configurar la seguridad HTTP.
+     * @return la cadena de filtros de seguridad configurada.
+     * @throws Exception si ocurre un error durante la configuración.
+     */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
