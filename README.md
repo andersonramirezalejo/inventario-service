@@ -85,6 +85,13 @@ O bien, para construir el JAR y ejecutarlo:
 java -jar target/Inventario-0.0.1-SNAPSHOT.jar
 ```
 
+### Ejemplo de petición con API Key
+```http
+GET /api/inventario HTTP/1.1
+Host: localhost:8081
+X-API-KEY: inventario_secreta_54321
+```
+
 ## Endpoints Principales
 
 - `GET /api/inventario/{productoId}`: Consulta inventario y detalles del producto.
@@ -97,17 +104,25 @@ java -jar target/Inventario-0.0.1-SNAPSHOT.jar
 Para ejecutar las pruebas unitarias:
 
 ```powershell
-./mvnw test
+./mvn test
 ```
 
 ## Docker
+Para construir y ejecutar el microservicio junto con su base de datos usando Docker Compose:
 
-El proyecto incluye un `Dockerfile` para facilitar el despliegue en contenedores. Para construir y ejecutar la imagen:
+1. Asegúrate de tener el archivo `docker-compose.yml` en el directorio raíz (fuera de la carpeta del proyecto `inventario-service`).
+2. Ejecuta el siguiente comando desde la ubicación del archivo `docker-compose.yml`:
+   ```sh
+   docker-compose up --build -d
+   ```
+   Esto levantará:
+   - Una base de datos PostgreSQL para inventario (`db_inventario`)
+   - El microservicio de inventario (`inventario-service`)
 
-```powershell
-docker build -t inventario-service .
-docker run -p 8081:8081 inventario-service
-```
+3. Para detener y eliminar los contenedores, ejecuta:
+   ```sh
+   docker-compose down
+   ```
 
 ## Swagger / OpenAPI
 
